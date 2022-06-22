@@ -651,7 +651,9 @@ class YoudaoNotePull(object):
             image_path = self._get_new_image_path(image_url)
             if image_url == image_path:
                 continue
-            content = content.replace(image_url, image_path)
+            image_name = image_path.split('/')[-1]
+            # content = content.replace(image_url, image_path)
+            content = content.replace(image_url, image_name)
 
         # 附件
         attach_name_and_url_list = REGEX_ATTACH.findall(content)
@@ -662,7 +664,9 @@ class YoudaoNotePull(object):
             attach_path = self._download_ydnote_url(attach_url, attach_name_and_url[0])
             if not attach_path:
                 continue
-            content = content.replace(attach_url, attach_path)
+            attach_name = attach_path.split('/')[-1]
+            # content = content.replace(attach_url, attach_path)
+            content = content.replace(attach_url, attach_name)
 
         with open(file_path, 'wb') as f:
             f.write(content.encode())
